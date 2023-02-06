@@ -1,0 +1,129 @@
+
+```
+# Name: Sarjak Maniar
+# Email: sm2732@scarletmail.rutgers.edu
+
+
+library(readr)
+#Sparrow Example
+Bumpus_sparrows <- read_csv("/Users/sarju/Desktop/MITA Sem 2/MVA/Classwork/Week2/Bumpus_sparrows.csv")
+Bumpus_sparrows
+sparr <- Bumpus_sparrows
+sparr
+
+# Let us understand the features of our dataset: 
+#   (1) Total_length: length in millimeters from tip of beak to tip of tail; 
+#   (2) Alar_extent: the distance in millimeters from tip to tip of extended wings; 
+#   (3) L_beak_head: length of head in millimeters from tip of beak to the occiput; 
+#   (4) L_humerous: length of humerus in fractions of an inch; 
+#   (5) L_keel_sternum: length of sternum in fractions of an inch
+
+# separating the data for survived sparrows and non-survived sparrows..
+
+survival_data <- sparr[1:21,]
+survival_data
+unique(survival_data$Survivorship)  # checking the unique values of Survivorship column for survival data after separating
+
+non_survival_data <- sparr[22:49,]
+non_survival_data
+unique(non_survival_data$Survivorship)  # checking the unique values of Survivorship column for non survival data after separating
+
+# Removing the 1st column as it is not numeric..
+survival_data <- survival_data[,-1]
+survival_data
+
+non_survival_data <- non_survival_data[,-1]
+non_survival_data
+
+# Checking the type
+typeof(survival_data) # list
+typeof(non_survival_data) # list
+
+is.matrix(survival_data) # FALSE
+is.matrix(non_survival_data) # FALSE
+
+# Converting it to matrix type
+survival_data_matrix <- as.matrix(survival_data)
+survival_data_matrix
+
+non_survival_data_matrix <- as.matrix(non_survival_data)
+non_survival_data_matrix
+
+typeof(survival_data_matrix) # double
+is.matrix(survival_data_matrix) # TRUE
+
+typeof(non_survival_data_matrix) # double
+is.matrix(survival_data_matrix) # TRUE
+
+# Calculating the mean values for each column of survival_data_matrix
+colMeans(survival_data_matrix)
+
+# Calculating the mean values for each column of non_survival_data_matrix
+colMeans(non_survival_data_matrix)
+
+
+# Covariance 
+# Covariance evaluates how the mean values of two random variables move together. 
+# More precisely, covariance refers to the measure of how two random variables in a data set will change together. 
+# A higher number denotes higher dependency.
+# Positive Covariance -> A positive covariance between two variables indicates that these variables tend to be higher or lower at the same time.
+# Negative Covariance -> When the calculated covariance is less than negative, this indicates that the two variables have an inverse relationship.
+
+
+# Calculating the Covariance of the matrix survival_data_matrix
+cov(survival_data_matrix)
+
+# Inferences -> We can clearly see a lot of correlation among the different features from the
+#               the covariance matrix of survival_data_matrix. The Total_length seems to be 
+#               highly positively dependent with the Alar_extent (9.100000), which makes sense 
+#               intuitively. Also, Total_length is less positively dependent with the L_humerous
+#               so we can say that there is not much relation between them (0.870000).
+
+# Calculating the Covariance of the matrix non_survival_data_matrix
+cov(non_survival_data_matrix)
+
+# Inferences -> We can clearly see a lot of correlation among the different features from the
+#               the covariance matrix of non_survival_data_matrix. The Total_length seems to be 
+#               highly positively dependent with the Alar_extent again, which makes sense 
+#               intuitively. Also, L_beak_head is less positively dependent with the L_humerous
+#               so we can say that there is not much relation between them.
+#               The difference we can note here is, the values are higher than the one which
+#               were in the survival category. The value between Alar_extent and and 
+#               L_keel_sternum is 4.065608 for non_survival_data_matrix and for the 
+#               survival_data_matrix, the value if 0.88. This means that the sparrow will
+#               most likely not survive if the Alar_extent is more positively correlated or dependent
+#               with the L_keel_sternum.
+
+
+
+# Correlation
+# Correlation is a measure that determines the degree to which two or more random 
+# variables move in sequence.
+# A correlation matrix is computed for the goal when dealing with large amounts of 
+# data is to find patterns. 
+# As a result, a correlation matrix is used to look for a pattern in the data 
+# and determine whether the variables are highly correlated.
+
+
+# Calculating the Correlation of the matrix survival_data_matrix
+cor(survival_data_matrix)
+
+# Calculating the Correlation of the matrix non_survival_data_matrix
+cor(non_survival_data_matrix)
+
+# Inferences -> We know that Correlation is simply indicates how strongly two variables are related.
+#               As we can see from the correlation matrix of survival_data_matrix, the correlation
+#               values of L_keel_sternum and L_humerous is 0.4165447 which is positive and less strongly
+#               related.
+#               For the non_survival_data_matrix, the value ofL_keel_sternum and L_humerous is 0.6677936 
+#               which is again positive and less strongly related.
+#               Now, since the range of the values in the correlation values is always between -1 to +1,
+#               if we compare the two correlation matrices of survival_data_matrix and non_survival_data_matrix
+#               there is still a decent difference in the values. 
+#               So we can infer that if the correlation value of L_keel_sternum and L_humerous is more strongly
+#               related, then the sparrow will most likely not survive.. Again, this also depends on the 
+#               correlation values of other features. 
+#               This is how we can compare and draw the insights from the correlation matrix of a given data.
+                 
+```
+
